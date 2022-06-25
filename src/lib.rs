@@ -40,19 +40,32 @@ impl EffBool {
     }
 
     /// Set boolean and returns ( is_changed ,  actualbool ) .
+    /// Will set is_changed flag to false.
+    /// If you want to just peek the is_changed flag and not modifying it, use peek_change_flag() function instead.
     pub fn set_and_is_changed(&mut self, b: bool) -> (bool, bool) {
         self.set(b);
-        (self.is_changed, self.actual_boolean)
+        (self.is_changed(), self.actual_boolean)
     }
 
     /// If boolean value has changed with last set() or set_and_is_changed() call, returns true.
-    pub fn is_changed(&self) -> bool {
-        self.is_changed
+    /// Will set is_changed flag to false.
+    /// If you want to just peek the is_changed flag and not modifying it, use peek_change_flag() function instead.
+    pub fn is_changed(&mut self) -> bool {
+       let ret=  self.is_changed;
+        self.is_changed=false;//clear
+        ret
     }
 
-    /// Clear the changed flag.
+    /// Clear the changed flag manually.
     pub fn clear_change_flag(&mut self) {
         self.is_changed = false;
+    }
+
+    /// Just returns is_changed flag.
+    /// Will not clear the flag.
+    /// You can clear the flag by calling clear_change_flag()
+    pub fn peek_change_flag(&self)->bool{
+        self.is_changed
     }
 }
 

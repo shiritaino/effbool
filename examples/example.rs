@@ -31,8 +31,6 @@ fn main() {
         if flag.is_changed() && flag.get() {
             println!("send");
             sender.send(Message::ExpensiveActionA).unwrap();
-            //clear
-            flag.clear_change_flag();
         } else {
             println!("do not send");
         }
